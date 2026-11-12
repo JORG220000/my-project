@@ -1,14 +1,97 @@
 <!doctype html>
 <html lang="ru">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no" />
-    <meta name="color-scheme" content="dark" />
-    <title>ASCEND</title>
-    <script type="module" crossorigin src="./assets/index-hdgBp8cW.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-BLXxAv6h.css">
-  </head>
-  <body>
-    <div id="root"></div>
-  </body>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101112">
+  <meta name="description" content="AUREL V01. Интерактивный концепт спорткара: исследуйте конструкцию в 3D и создайте свою конфигурацию.">
+  <title>AUREL Automobili — чистая форма скорости</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="assets/three.min.js"></script>
+  <script defer src="car.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#engineering">Перейти к содержанию</a>
+  <header class="header">
+    <a class="brand" href="#home" aria-label="AUREL — на главную"><svg viewBox="0 0 36 32" aria-hidden="true"><path d="M3 28 18 3l15 25M10 19h16M14 28l4-7 4 7"/></svg><span>AUREL<small>AUTOMOBILI</small></span></a>
+    <nav aria-label="Основная навигация"><a href="#home">V01</a><a href="#engineering">Философия</a><a href="#aero">Инженерия</a></nav>
+    <a class="header-cta" href="#atelier">Ваш AUREL <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <main>
+    <section class="experience" id="home" aria-labelledby="hero-title">
+      <div class="stage">
+        <div class="studio-grid" aria-hidden="true"></div>
+        <div class="hero-word" aria-hidden="true">AUREL</div>
+        <div class="stage-top"><span><i class="status-dot"></i> V01 / FIRST EDITION</span><span class="stage-coordinate">45°28′ N &nbsp; 09°11′ E</span></div>
+        <div id="car-scene" class="car-scene" role="img" aria-label="Интерактивная трёхмерная модель спорткара AUREL V01. Детали можно выбрать кнопками под моделью."></div>
+        <div class="scene-loading" id="scene-loading"><span></span>Собираем V01</div>
+        <div class="scene-fallback" id="scene-fallback" hidden>
+          <img src="assets/car-profile.svg" alt="Силуэт спорткара AUREL V01">
+          <p>3D недоступно в этом браузере. Конструкцию можно изучить с помощью кнопок ниже.</p>
+        </div>
+        <div class="hero-copy"><p class="eyebrow">ИСКУССТВО ЧУВСТВОВАТЬ ДОРОГУ</p><h1 id="hero-title">Чистая форма<br><em>скорости.</em></h1></div>
+        <div class="assembly-heading" aria-hidden="true"><p class="eyebrow">КРАСОТА — В КАЖДОЙ ДЕТАЛИ</p><h2>Ничего<br>лишнего.</h2><p>Один характер.<br>Пять инженерных решений.</p></div>
+        <div class="assembly-card" id="part-panel" hidden>
+          <div class="part-meta"><span id="part-number">01 / 05</span><span>V01 · ANATOMY</span></div>
+          <h3 id="part-title">Скульптура скорости</h3>
+          <p id="part-description">Каждая линия кузова направляет поток воздуха. Каждая поверхность работает на движение.</p>
+          <div class="part-spec"><strong id="part-value">0,29</strong><span id="part-unit">коэффициент Cx</span></div>
+          <div class="part-nav"><button type="button" id="prev-part" aria-label="Предыдущая деталь">←</button><span id="part-label">Кузов</span><button type="button" id="next-part" aria-label="Следующая деталь">→</button></div>
+        </div>
+        <div class="scene-toolbar">
+          <button class="assembly-toggle" id="assembly-toggle" type="button" aria-expanded="false" aria-controls="part-panel part-controls"><span class="plus-icon" aria-hidden="true">+</span><span id="assembly-label">Разобрать V01</span><span class="button-sub">EXPLORE THE ENGINEERING</span></button>
+          <div class="view-controls" aria-label="Ракурс автомобиля"><button type="button" data-view="front" aria-label="Ракурс спереди" aria-pressed="true">01</button><button type="button" data-view="side" aria-label="Вид сбоку" aria-pressed="false">02</button><button type="button" data-view="rear" aria-label="Ракурс сзади" aria-pressed="false">03</button><span>РАКУРС</span></div>
+        </div>
+        <div class="part-controls" id="part-controls" hidden aria-label="Детали автомобиля"><button type="button" data-part="body" aria-pressed="true"><span>01</span> Кузов</button><button type="button" data-part="chassis" aria-pressed="false"><span>02</span> Монокок</button><button type="button" data-part="engine" aria-pressed="false"><span>03</span> Двигатель</button><button type="button" data-part="wheels" aria-pressed="false"><span>04</span> Колёса</button><button type="button" data-part="aero" aria-pressed="false"><span>05</span> Аэродинамика</button></div>
+        <div class="stage-bottom"><span class="scroll-cue"><span aria-hidden="true">↓</span> ПРОКРУТИТЕ, ЧТОБЫ ИССЛЕДОВАТЬ</span><span class="scene-hint" id="scene-hint">3D · СОЗДАН ДЛЯ ДВИЖЕНИЯ</span><button type="button" class="motion-button" id="motion-button" aria-pressed="false" aria-label="Остановить автоматическое движение модели">Ⅱ</button></div>
+        <div class="stage-progress" aria-hidden="true"><span id="stage-progress"></span></div>
+      </div>
+    </section>
+
+    <section class="manifesto section-pad" id="engineering" aria-labelledby="manifesto-title">
+      <div class="section-kicker reveal"><span>01 / ФИЛОСОФИЯ AUREL</span><span>DRIVEN BY FEELING.</span></div>
+      <h2 class="statement reveal" id="manifesto-title">МЕНЬШЕ ВЕСА.<br>БОЛЬШЕ <em>ЧУВСТВ.</em></h2>
+      <div class="manifesto-bottom reveal"><div class="tiny-emblem" aria-hidden="true">A<span>V01</span></div><p>Есть автомобили, которые перемещают.<br>И есть те, что меняют пульс.<br><br>V01 создан вокруг одного ощущения — абсолютной связи водителя с дорогой. Без фильтров. Без компромиссов. Только вы, поворот и следующий горизонт.</p><a class="text-link" href="#aero">Почувствовать разницу <span aria-hidden="true">↘</span></a></div>
+      <div class="spec-strip reveal"><div><span class="spec-caption">МОЩНОСТЬ</span><strong>720<small>л.с.</small></strong><span>V8 · TWIN TURBO</span></div><div><span class="spec-caption">0—100 КМ/Ч</span><strong>2,9<small>сек.</small></strong><span>ОДНО МГНОВЕНИЕ</span></div><div><span class="spec-caption">СУХАЯ МАССА</span><strong>1 280<small>кг</small></strong><span>КАРБОНОВЫЙ МОНОКОК</span></div><div><span class="spec-caption">МАКСИМУМ</span><strong>338<small>км/ч</small></strong><span>СВОБОДА В ЧИСТОМ ВИДЕ</span></div></div>
+    </section>
+
+    <section class="aero-section section-pad" id="aero" aria-labelledby="aero-title">
+      <div class="section-kicker reveal"><span>02 / НЕВИДИМАЯ СИЛА</span><span>FORM FOLLOWS EMOTION.</span></div>
+      <div class="aero-intro reveal"><h2 id="aero-title">Воздух —<br>тоже <em>двигатель.</em></h2><div><p>Не бороться с потоком.<br>Стать его продолжением.</p><p class="muted">Передний сплиттер, плоское днище и активное антикрыло работают как единая система. Меняйте режим — почувствуйте, как меняется характер V01.</p></div></div>
+      <div class="wind-tunnel reveal" id="wind-tunnel">
+        <div class="tunnel-top"><span><i class="status-dot"></i> АЭРОДИНАМИЧЕСКАЯ ЛАБОРАТОРИЯ</span><span>250 KM/H</span></div>
+        <div class="airflow" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div id="aero-model" class="secondary-scene aero-model" role="img" aria-label="Трёхмерный вид сбоку: AUREL V01 в аэродинамической трубе"></div>
+        <img class="aero-car" src="assets/car-profile.svg" alt="Профиль AUREL V01 в аэродинамической трубе" width="1200" height="400">
+        <div class="aero-marker" aria-hidden="true"><span></span>ACTIVE AERO</div>
+        <div class="tunnel-bottom"><div class="mode-switch" role="group" aria-label="Режим аэродинамики"><button type="button" data-drive="strada" aria-pressed="true">STRADA <span>Дорога</span></button><button type="button" data-drive="pista" aria-pressed="false">PISTA <span>Трек</span></button></div><p class="downforce"><strong id="downforce">180</strong><span>кг<br>прижимной силы*</span></p></div>
+      </div>
+      <div class="aero-notes reveal"><p id="drive-description" aria-live="polite">STRADA — баланс устойчивости и свободы. Минимальное сопротивление на длинных прямых.</p><span>* Концептуальные показатели при 250 км/ч.</span></div>
+    </section>
+
+    <section class="craft-section section-pad" aria-labelledby="craft-title">
+      <div class="craft-visual reveal" aria-hidden="true"><div class="carbon-weave"></div><div class="craft-ring"><span>A</span></div><div class="craft-visual-caption"><span>CARBON / 01</span><span>PRECISION IN EVERY FIBRE</span></div></div>
+      <div class="craft-copy reveal"><p class="eyebrow">03 / ПРИРОДА СОВЕРШЕНСТВА</p><h2 id="craft-title">Сила.<br>Внутри.</h2><p>Монокок из углеволокна. Алюминий, обработанный с точностью до микрона. Механика, которую хочется рассматривать.</p><p class="muted">Настоящая роскошь — когда в каждой детали есть смысл. Даже в той, которую никто не видит.</p><button class="text-link" id="explore-chassis" type="button">Заглянуть под кузов <span aria-hidden="true">↗</span></button></div>
+    </section>
+
+    <section class="atelier section-pad" id="atelier" aria-labelledby="atelier-title">
+      <div class="section-kicker reveal"><span>04 / ATELIER AUREL</span><span>YOUR SIGNATURE. OUR OBSESSION.</span></div>
+      <div class="atelier-heading reveal"><h2 id="atelier-title">Ваш характер.<br>Ваш <em>AUREL.</em></h2><p>Три оттенка.<br>Тысяча способов выделиться.</p></div>
+      <div class="configuration reveal"><div class="config-visual"><div id="config-model" class="secondary-scene config-model-scene" role="img" aria-label="Трёхмерный AUREL V01 в выбранном цвете"></div><span class="config-word" aria-hidden="true">V01</span><svg class="config-car" viewBox="0 0 1000 380" role="img" aria-label="Выбранный цвет кузова AUREL V01"><defs><linearGradient id="paintGradient" x1="0" y1="0" x2="0.2" y2="1"><stop stop-color="var(--paint-light)"/><stop offset=".5" stop-color="var(--paint)"/><stop offset="1" stop-color="var(--paint-dark)"/></linearGradient><linearGradient id="windowGradient" x2="0.5" y2="1"><stop stop-color="#48515a"/><stop offset="1" stop-color="#101619"/></linearGradient><radialGradient id="rimGradient"><stop stop-color="#777e80"/><stop offset=".35" stop-color="#202426"/><stop offset=".84" stop-color="#99a0a0"/><stop offset=".9" stop-color="#151719"/></radialGradient><filter id="shadowBlur"><feGaussianBlur stdDeviation="9"/></filter></defs><ellipse cx="503" cy="303" rx="402" ry="20" opacity=".18" filter="url(#shadowBlur)"/><path d="m81 253 15-54 58-31 186-30 99-67 151-9 119 83 141 23 57 43-9 55-74 13H153z" fill="url(#paintGradient)" stroke="var(--paint-dark)" stroke-width="2"/><path d="m358 138 91-61 134-3 101 69z" fill="url(#windowGradient)"/><path d="m509 78-8 61M431 148l-13 96h211l10-98" fill="none" stroke="#555" stroke-opacity=".6" stroke-width="3"/><path d="m96 203 102-24-35 17-71 21M794 184l74 12 17 13-85-9" fill="#e8f7ff"/><path d="m710 166-64 27-6 44 57-16z" fill="#101516"/><path d="m90 255 74 21h651l77-14-7 17H112z" fill="#151819"/><path d="m797 151 57 7-2 8-70-5z" fill="#242829"/><g><circle cx="244" cy="258" r="64" fill="#111415"/><circle cx="244" cy="258" r="47" fill="url(#rimGradient)"/><path d="m244 218 8 30 31-14-22 24 20 25-31-14-8 29-5-30-30 15 21-25-20-25 31 14z" fill="#b9bfc0"/><circle cx="244" cy="258" r="11" fill="#383e40"/></g><g><circle cx="759" cy="258" r="64" fill="#111415"/><circle cx="759" cy="258" r="47" fill="url(#rimGradient)"/><path d="m759 218 8 30 31-14-22 24 20 25-31-14-8 29-5-30-30 15 21-25-20-25 31 14z" fill="#b9bfc0"/><circle cx="759" cy="258" r="11" fill="#383e40"/></g><path d="m130 230 213-63 365-9" fill="none" stroke="#fff" stroke-opacity=".45" stroke-width="2"/><path d="M91 240h57m691-11 46 4" stroke="#22292b" stroke-width="9"/></svg></div>
+        <div class="config-panel"><div class="config-model"><span>AUREL V01</span><span>FIRST EDITION</span></div><h3 id="color-name">Argento Luna</h3><p id="color-description">Холодное серебро. Точная геометрия света.</p><div class="color-swatches" role="group" aria-label="Цвет кузова"><button class="swatch silver" type="button" data-color="silver" aria-label="Argento Luna — серебристый" aria-pressed="true"><span></span></button><button class="swatch orange" type="button" data-color="orange" aria-label="Arancio Fuoco — оранжевый" aria-pressed="false"><span></span></button><button class="swatch black" type="button" data-color="black" aria-label="Nero Assoluto — чёрный" aria-pressed="false"><span></span></button></div><dl><div><dt>Диски</dt><dd>20″ Forged / Graphite</dd></div><div><dt>Отделка</dt><dd>Карбон · Alcantara</dd></div><div><dt>Двигатель</dt><dd>V8 4.0 Twin Turbo</dd></div></dl><button class="dark-button" id="save-config" type="button">Это мой AUREL <span aria-hidden="true">↗</span></button><button class="config-preview" id="preview-color" type="button">Исследовать модель в 3D <span aria-hidden="true">↗</span></button></div>
+      </div>
+    </section>
+
+    <section class="closing section-pad"><p class="eyebrow reveal">НЕ ДЛЯ КАЖДОГО. ДЛЯ ВАС.</p><h2 class="reveal">FOLLOW<br>THE <em>FEELING.</em></h2><a class="closing-link" href="#home" aria-label="Вернуться к модели V01"><span aria-hidden="true">↗</span></a></section>
+  </main>
+
+  <footer class="footer"><a href="#home" class="footer-brand">AUREL <span>AUTOMOBILI</span></a><p>Независимый дизайн-концепт для портфолио.<br>Бренд, модель и характеристики вымышлены.</p><span>© 2026 AUREL CONCEPT</span><a href="#home" class="back-top" aria-label="Наверх">↑</a></footer>
+
+  <dialog id="config-dialog" aria-labelledby="dialog-title"><button class="dialog-close" id="close-dialog" type="button" aria-label="Закрыть">×</button><p class="eyebrow">ATELIER / ВАША КОНФИГУРАЦИЯ</p><h2 id="dialog-title">Характер<br>определён.</h2><div class="config-summary"><span>AUREL V01 · FIRST EDITION</span><strong id="summary-color">Argento Luna</strong><span>V8 Twin Turbo · 720 л.с. · 20″ Forged</span></div><p>Сохраните карточку своего V01. Это демонстрационный конфигуратор: заказ и оплата не оформляются.</p><button class="accent-button" id="download-config" type="button">Скачать конфигурацию <span aria-hidden="true">↓</span></button></dialog>
+  <div class="toast" id="toast" role="status" hidden></div>
+  <noscript><div class="noscript-message">Включите JavaScript, чтобы исследовать автомобиль в 3D и выбрать его цвет. Текст и иллюстрации доступны ниже.</div></noscript>
+</body>
 </html>
